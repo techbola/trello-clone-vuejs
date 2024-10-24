@@ -7,14 +7,15 @@
         :key="list.id"
       >
         <h2 class="mb-2 font-medium">{{ list.title }}</h2>
-        <div
-          class="p-2 my-2 bg-white rounded shadow cursor-pointer"
-          v-for="card in list.cards"
-          :key="card.id"
-        >
-          <span class="text-sm font-medium">{{ card.title }}</span>
-          <p class="text-xs text-gray-400">{{ card.description }}</p>
-        </div>
+
+        <Draggable :list="list.cards" group="cards">
+          <template #item="{ element }">
+            <div class="p-2 my-2 bg-white rounded shadow cursor-pointer">
+              <span class="text-sm font-medium">{{ element.title }}</span>
+              <p class="text-xs text-gray-400">{{ element.description }}</p>
+            </div>
+          </template>
+        </Draggable>
 
         <button
           class="w-full p-2 mt-2 text-sm font-medium text-left text-gray-500 bg-transparent rounded hover:bg-white"
@@ -28,6 +29,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
+import Draggable from 'vuedraggable'
 
 interface Card {
   id: number
